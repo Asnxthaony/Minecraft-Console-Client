@@ -23,8 +23,11 @@ namespace MinecraftClient.Protocol
         string GetUserUUID();
         string GetSessionID();
         string[] GetOnlinePlayers();
+        Dictionary<string, string> GetOnlinePlayersWithUUID();
         Location GetCurrentLocation();
         World GetWorld();
+        bool GetTerrainEnabled();
+        bool SetTerrainEnabled(bool enabled);
 
         /// <summary>
         /// Called when a server was successfully joined
@@ -37,6 +40,11 @@ namespace MinecraftClient.Protocol
         /// <param name="text">Text received from the server</param>
         /// <param name="isJson">TRUE if the text is JSON-Encoded</param>
         void OnTextReceived(string text, bool isJson);
+
+        /// <summary>
+        /// Called when the player respawns, which happens on login, respawn and world change.
+        /// </summary>
+        void OnRespawn();
 
         /// <summary>
         /// This method is called when a new player joins the game
@@ -55,8 +63,9 @@ namespace MinecraftClient.Protocol
         /// Called when the server sets the new location for the player
         /// </summary>
         /// <param name="location">New location of the player</param>
-        /// <param name="yawpitch">Yaw and pitch (optional and currently not parsed)</param>
-        void UpdateLocation(Location location, byte[] yawpitch);
+        /// <param name="yaw">New yaw</param>
+        /// <param name="pitch">New pitch</param>
+        void UpdateLocation(Location location, float yaw, float pitch);
 
         /// <summary>
         /// This method is called when the connection has been lost
